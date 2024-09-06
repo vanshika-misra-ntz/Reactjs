@@ -1,0 +1,27 @@
+Basic of React
+
+
+ props (short for "properties") are a way to pass data from a parent component to a child component. They allow you to make components dynamic and reusable by providing them with different data inputs.
+
+
+Key Points about Props:
+Immutable: Props are read-only in the child component. This means that a component cannot modify the props it receives; they are immutable.
+
+Passed from Parent to Child: The parent component passes props to its children.
+
+Used to Make Components Reusable: By passing different props, you can reuse the same component in different ways. For instance, the same Child component can display different names based on the prop it receives.
+
+Props as Function Parameters: In functional components, props are passed as an argument to the component function:
+
+
+Prop Types: You can define the expected types for props using the prop-types package, which helps ensure that the correct type of data is passed to components.
+
+For example:-
+
+function Parent() {
+  return <Child name="John" />;
+}
+
+function Child(props) {
+  return <h1>Hello, {props.name}!</h1>;
+}
