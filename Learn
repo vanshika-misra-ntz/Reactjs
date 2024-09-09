@@ -36,3 +36,27 @@ function Child(props) {
 USE EFFECT
 useEffect is a powerful hook that allows you to perform side effects in functional components.
 Side effects include tasks like fetching data from an API, subscribing to a service, manipulating the DOM, or running a function when a component mounts, updates, or unmounts.
+
+
+import React, { useState, useEffect } from 'react';
+
+function FetchData() {
+  const [data, setData] = useState(null);
+
+  useEffect(() => {
+    // Fetch data from API when component mounts
+    fetch("https://api.example.com/data")
+      .then((response) => response.json())
+      .then((data) => setData(data));
+
+    // Cleanup function if needed (e.g., abort fetch)
+    return () => {
+      console.log("Component unmounted");
+    };
+  }, []);  // Empty array means it runs once after the initial render
+
+  return <div>Data: {data ? JSON.stringify(data) : "Loading..."}</div>;
+}
+useEffect is a hook that allows you to run side effects in functional components.
+You can control when the effect runs by providing a dependency array.
+It can also handle cleanup to prevent memory leaks when the component unmounts or updates.
