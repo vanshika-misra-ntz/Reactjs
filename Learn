@@ -1,7 +1,14 @@
 Basic of React
 
 
- props (short for "properties") are a way to pass data from a parent component to a child component. They allow you to make components dynamic and reusable by providing them with different data inputs.
+How to make a new project through vs code?
+Ans->  Building a React-Project-App ---> npx create-react-app my-app
+
+  To start the React-Project-App ---> npm start
+
+ 
+What are props?
+Ans-> props (short for "properties") are a way to pass data from a parent component to a child component. They allow you to make components dynamic and reusable by providing them with different data inputs.
 
 
 Key Points about Props:
@@ -25,3 +32,7 @@ function Parent() {
 function Child(props) {
   return <h1>Hello, {props.name}!</h1>;
 }
+
+USE EFFECT
+useEffect is a powerful hook that allows you to perform side effects in functional components.
+Side effects include tasks like fetching data from an API, subscribing to a service, manipulating the DOM, or running a function when a component mounts, updates, or unmounts.
