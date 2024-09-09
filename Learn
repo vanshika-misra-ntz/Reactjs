@@ -255,3 +255,605 @@ KEY POINTS:
 2. key is a unique identifier for each list item, allowing React to track and efficiently update components in a list.
 3. Always provide a unique and stable key (like an id or index) when rendering lists in React.
 
+CREATECONTEXT:=>
+createContext is a function that allows you to create a Context for sharing data (state or props) globally across a component tree without having to pass props manually through every level.
+This helps avoid "prop drilling," where data is passed down through multiple layers of components.
+
+How createContext Works:
+Creating the Context:
+
+You use createContext to create a context object. This object provides two components:
+
+Provider: Supplies the context value to the component tree.
+Consumer: Any component that needs to access the context value can use the Consumer or React's useContext hook.
+
+Provider:
+The Provider component wraps part of your component tree and provides a value that will be available to any child component inside this tree.
+You pass the value to the provider as a prop.
+
+Consumer:
+The Consumer component or the useContext hook is used to read the value from the nearest matching context provider.
+If no provider is found, React uses the default value set in createContext.
+
+EXAMPLE:
+import React, { createContext, useContext, useState } from 'react';
+
+// Step 1: Create a Context
+const MyContext = createContext();
+
+function App() {
+  const [user, setUser] = useState("John");
+
+  return (
+    // Step 2: Use Provider to pass the value to the tree
+    <MyContext.Provider value={user}>
+      <ChildComponent />
+    </MyContext.Provider>
+  );
+}
+
+function ChildComponent() {
+  // Step 3: Use useContext hook to consume the value
+  const user = useContext(MyContext);
+  return <p>User: {user}</p>;
+}
+
+export default App;
+
+In React, createContext is a function that allows you to create a Context for sharing data (state or props) globally across a component tree without having to pass props manually through every level. This helps avoid "prop drilling," where data is passed down through multiple layers of components.
+
+How createContext Works:
+Creating the Context:
+
+You use createContext to create a context object. This object provides two components:
+Provider: Supplies the context value to the component tree.
+Consumer: Any component that needs to access the context value can use the Consumer or React's useContext hook.
+Provider:
+
+The Provider component wraps part of your component tree and provides a value that will be available to any child component inside this tree.
+You pass the value to the provider as a prop.
+Consumer:
+
+The Consumer component or the useContext hook is used to read the value from the nearest matching context provider.
+If no provider is found, React uses the default value set in createContext.
+Basic Example:
+jsx
+Copy code
+import React, { createContext, useContext, useState } from 'react';
+
+// Step 1: Create a Context
+const MyContext = createContext();
+
+function App() {
+  const [user, setUser] = useState("John");
+
+  return (
+    // Step 2: Use Provider to pass the value to the tree
+    <MyContext.Provider value={user}>
+      <ChildComponent />
+    </MyContext.Provider>
+  );
+}
+
+function ChildComponent() {
+  // Step 3: Use useContext hook to consume the value
+  const user = useContext(MyContext);
+  return <p>User: {user}</p>;
+}
+
+export default App;
+
+Key Components of createContext:
+
+1.createContext(defaultValue):
+Creates a context object.
+You can pass an optional defaultValue that will be used if a component does not have a matching Provider above it in the component tree.
+
+2.Provider:
+The Provider component is used to wrap the part of the component tree that needs access to the context.
+It accepts a value prop, which is passed down to consuming components.
+
+3.useContext(Context):
+A React hook that allows functional components to access the context value directly without needing to use a Consumer component.
+It reads the value from the nearest matching Provider in the tree.
+
+Advantages of createContext:
+Avoids Prop Drilling: You can pass data directly to deeply nested components without needing to pass it through every intermediate component.
+Global State Management: Useful for managing global state, such as themes, user authentication, or localization.
+
+FUNCTIONAL COMPONENTS
+1.Functional components in React are JavaScript functions that return JSX (React's syntax for defining UI). These components are simpler and more concise compared to class components. They have become the preferred way to build React applications, especially since the introduction of React hooks, which allow functional components to manage state and side effects.
+
+Key Features of Functional Components:
+Simple JavaScript Functions:
+Functional components are just functions that take props as arguments and return JSX to define the UI.
+    2. No this Keyword:
+Unlike class components, functional components don’t require the use of the this keyword to access props or methods, making them easier to understand and write.
+     3. Hooks for State and Lifecycle:
+With the introduction of React Hooks (like useState, useEffect), functional components can manage state and handle side effects, which were previously only possible with class components.
+    4.Stateless vs. Stateful:
+Previously, functional components were used for stateless components (components that didn’t manage their own state), while class components were used for stateful components. However, with hooks, functional components can now manage state, making them both stateless and stateful.
+    5. More Readable and Testable:
+Functional components are generally easier to write, read, and test because they are more like pure functions: given the same props, they always return the same UI.
+
+Advantages of Functional Components:
+Simpler Syntax: They are easier to understand and write.
+Hooks Support: With hooks, functional components can handle state, side effects, and lifecycle events.
+Better Performance: In some cases, functional components can be faster because they don’t need the overhead of this or extending from React.Component.
+Encourages Best Practices: They encourage writing smaller, reusable components.
+Summary:
+Functional components are JavaScript functions that return JSX.
+They are simpler than class components and do not use this.
+With React Hooks, they can manage state (useState) and side effects (useEffect), making them just as powerful as class components.
+Functional components are now the standard way to write components in modern React.
+
+EXAMPLE:=>
+import React, { useState } from 'react';
+
+function ToggleButton() {
+  const [isOn, setIsOn] = useState(false);
+
+  return (
+    <button onClick={() => setIsOn(!isOn)}>
+      {isOn ? 'ON' : 'OFF'}
+    </button>
+  );
+}
+
+export default ToggleButton;
+
+
+CLASS COMPONENTS:=>
+CLASS COMPONENTS:
+Class components in React are a way to define components using ES6 classes. Before the introduction of functional components with hooks, class components were the primary way to manage state and lifecycle methods in React applications. Although functional components are now more common, class components are still widely used in legacy codebases.
+Key Features of Class Components:
+
+ES6 Classes:
+Class components are built using JavaScript's class syntax.
+They extend React.Component and must include a render() method, which returns the JSX to be displayed on the screen.
+    2.State Management:
+-> Unlike older functional components (before hooks), class components can have local state. 
+->You define the state in the class constructor and update it using this.setState().
+    3. Lifecycle Methods:
+->Class components come with lifecycle methods that allow you to hook into different stages of a component's lifecycle.
+->This includes mounting (when a component is added to the DOM), updating, and unmounting (when a component is removed from the DOM).
+    4.Common Lifecycle Methods:
+componentDidMount(): Runs after the component is first rendered to the DOM.
+componentDidUpdate(): Runs after updates to props or state.
+componentWillUnmount(): Runs right before the component is removed from the DOM.
+
+  5.this Keyword:
+In class components, you often need to use the this keyword to reference props, state, and methods.
+This can sometimes cause confusion with JavaScript's handling of this, requiring methods to be bound or using arrow functions to keep the context of this correct.
+
+Differences from Functional Components:
+State and Lifecycle: Before React Hooks, class components were the only way to manage state and use lifecycle methods. Functional components needed hooks like useState and useEffect to do the same.
+
+Syntax: Class components use more verbose syntax with ES6 classes, while functional components are more concise and simpler to write.
+
+this: In class components, you need to work with the this keyword, which can sometimes lead to confusion. Functional components don’t use this.
+
+When to Use Class Components:
+Legacy Code: Many older React projects still use class components, so understanding them is essential when working with or maintaining such codebases.
+Complex State or Lifecycle Needs: While functional components can now handle state and lifecycle events with hooks, class components used to be the go-to choice for complex state management and lifecycle handling.
+Summary:
+Class components are ES6 classes that extend React.Component and use the render() method to return JSX.
+They manage state and have lifecycle methods, like componentDidMount and componentDidUpdate.
+While functional components with hooks have become more popular, class components are still used in many React applications, especially in legacy codebases.
+EXAMPLE:=>
+import React, { Component } from 'react';
+
+class Greeting extends Component {
+  render() {
+    return <h1>Hello, {this.props.name}!</h1>;
+  }
+}
+
+export default Greeting;
+
+
+HOOKS:
+
+Hooks in React are special functions that let you use state and other React features, like lifecycle methods, in functional components. They were introduced in React 16.8, enabling functional components to have features that were previously only available in class components. Hooks have since become the preferred way to build components in modern React applications.
+Key Hooks in React:
+useState:
+Manages state in functional components.
+It returns an array with two elements: the current state value and a function to update that state.
+EXAMPLE:
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);  // Declare state with default value 0
+
+  return (
+    <div>
+      <p>Count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+2.useEffect:
+Allows you to perform side effects (like data fetching, updating the DOM, or setting up subscriptions) in functional components.
+It runs after the component renders, and you can specify how and when it runs using dependencies.
+
+EXAMPLE:=>
+import React, { useState, useEffect } from 'react';
+
+function Timer() {
+  const [time, setTime] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => setTime(time + 1), 1000);  // Run side effect
+
+    return () => clearInterval(interval);  // Cleanup on component unmount
+  }, [time]);  // Dependency array
+
+  return <p>Time: {time}</p>;
+}
+
+3.useContext:
+Allows you to consume values from React Context without needing a Consumer component.
+Makes it easier to share data between components without prop drilling
+EXAMPLE:=>
+import React, { useContext } from 'react';
+const ThemeContext = React.createContext('light');
+
+function ThemedButton() {
+  const theme = useContext(ThemeContext);  // Consume the theme context
+  return <button style={{ background: theme === 'dark' ? '#333' : '#fff' }}>Click me</button>;
+}
+4.useReducer:
+An alternative to useState for more complex state logic, often used when you have multiple related state updates.
+It works similarly to Redux but on a smaller, component-specific scale
+
+EXAMPLE:=>
+import React, { useReducer } from 'react';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      return state;
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <div>
+      <p>Count: {state.count}</p>
+      <button onClick={() => dispatch({ type: 'increment' })}>Increment</button>
+      <button onClick={() => dispatch({ type: 'decrement' })}>Decrement</button>
+    </div>
+  );
+}
+
+4.useRef:
+Provides a way to access and interact with DOM elements or mutable values that persist across renders without triggering re-renders.
+Useful for referencing DOM elements (like focusing on an input) or keeping track of previous state values.
+EXAMPLE:=>
+import React, { useRef, useEffect } from 'react';
+
+function TextInput() {
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    inputRef.current.focus();  // Automatically focus the input element
+  }, []);
+
+  return <input ref={inputRef} />;
+}
+Rules of Hooks:
+
+Only Call Hooks at the Top Level: Don’t call hooks inside loops, conditions, or nested functions. Always use them at the top level of the component.
+Only Call Hooks in React Functions: Hooks can only be used inside functional components or custom hooks, not in regular JavaScript functions or class components.
+
+Custom Hooks:
+You can create your own custom hooks to share logic between components. A custom hook is just a function that uses one or more built-in hooks (like useState or useEffect).
+
+Summary:
+Hooks allow you to manage state, side effects, and lifecycle methods in functional components.
+Key hooks include useState (state management), useEffect (side effects), useContext (context consumption), useReducer (complex state logic), and useRef (accessing DOM elements).
+Hooks simplify component logic and make code more reusable and easier to understand compared to class components.
+
+react.createElement:=>
+
+In React, the return React.createElement method is used to create and describe the structure of a React component or element. While JSX (the syntax that looks like HTML inside JavaScript) is commonly used, it is just syntactic sugar for the underlying React.createElement() function.
+React.createElement() Overview:
+React.createElement is the core method that React uses to create elements (virtual DOM nodes).
+It takes three main arguments:
+Type of Element: The type of the element you want to create (e.g., 'div', 'h1', a React component, etc.).
+Props (Attributes): An object containing properties/attributes to be applied to the element (e.g., class names, event handlers, etc.).
+Children (Content): The child elements or content to be nested inside the element.
+
+EXAMPLE:=>
+React.createElement(type, props, ...children);
+
+Arguments:
+type:
+A string (e.g., 'div', 'p', 'button') representing an HTML element or a React component.
+props:
+An object containing the properties (attributes) of the element. This can include things like className, id, onClick event handlers, etc.
+If there are no props to apply, it can be set to null.
+children:
+The content inside the element or nested elements. This can be a string (for text) or other React elements/components.
+Conclusion:
+React.createElement() is the core method for creating React elements without JSX.
+It generates virtual DOM elements, making it easier for React to efficiently update the UI.
+While JSX simplifies writing React code, it is ultimately compiled into React.createElement() function calls by tools like Babel.
+
+
+STATE:
+In React, state is an object that represents the dynamic data of a component. It is used to store and manage information that can change over time, and when the state changes, React re-renders the component to reflect those changes in the UI. State is essential for creating interactive and dynamic components.
+Key Points about State:
+Managing Dynamic Data:
+State is typically used to manage data that changes in response to user actions, such as form inputs, button clicks, or API responses.
+Example:
+import React, { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0); // Declare state variable and update function
+
+  return (
+    <div>
+      <p>Current count: {count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
+    </div>
+  );
+}
+
+In this example, count is the state variable, and setCount is the function that updates the state. Every time the button is clicked, count is incremented, and React re-renders the component.
+2. Initialization:
+State is initialized in functional components using the useState hook. The useState hook takes an initial value as its argument and returns an array containing the current state and a function to update it.
+const [state, setState] = useState(initialValue);
+
+In class components, state is initialized in the constructor using this.state.
+
+3.Updating State:
+State is updated using the function provided by useState in functional components (e.g., setState).
+State updates are asynchronous in React. React batches state updates and re-renders components efficiently. You cannot directly access the updated state immediately after calling the state updater function.
+setCount(count + 1);  // This schedules an update to increment the count by 1
+
+4.Triggers Re-renders:
+When the state of a component changes, React automatically re-renders the component to reflect the new state in the UI. This makes React components reactive to data changes.
+Only the components whose state has changed will be re-rendered, making React very efficient.
+
+State vs. Props:
+Props are used to pass data from parent to child components, and they are read-only.
+State is local to the component and can be modified by the component itself using the state updater function (e.g., setState).
+6. State in Class Components:
+In class components, state is managed using this.state and updated with this.setState().
+Summary:
+State is used to manage dynamic data in a component that can change over time.
+State changes trigger re-renders in React, updating the UI to reflect the new data.
+In functional components, useState is used to declare and update state, while class components use this.state and this.setState.
+
+setState METHOD:
+The setState method in React is used to update the state of a component. In class components, setState triggers a re-render of the component to reflect the new state in the UI. It merges the updated state with the current state and ensures that the component responds to changes in data.
+Key Points about setState:
+Used to Update State:
+The setState method allows you to update the component’s state. When the state changes, React re-renders the component and updates the UI accordingly.
+EXAMPLE:=>
+this.setState({ count: this.state.count + 1 });
+In this example, the count state is incremented by 1, and React re-renders the component with the updated state.
+
+2. Merges State:
+In class components, setState performs a shallow merge of the new state with the existing state. This means you don't need to provide the entire state object—just the properties you want to update.
+
+EXAMPLE: this.setState({ name: 'Alice' });
+
+This will only update the name property in the state, leaving other state properties unchanged.
+3.Asynchronous Nature:
+setState is asynchronous, meaning the state is not updated immediately after the setState call. Instead, React schedules updates and batches multiple setState calls for performance reasons.
+If you need to perform an action after the state has been updated, you can pass a callback function as the second argument to setState.
+EXAMPLE:
+this.setState({ count: this.state.count + 1 }, () => {
+  console.log('State updated:', this.state.count);
+});
+
+4.Functional setState:
+When the new state depends on the previous state, it’s recommended to use a functional version of setState. This ensures that you always have the correct previous state, especially when multiple setState calls are made.
+EXAMPLE:this.setState((prevState) => ({ count: prevState.count + 1 }));
+
+In this case, the prevState argument is the previous state value, ensuring that you are working with the latest state when making updates.
+Does Not Modify State Directly:
+Never mutate the state directly (e.g., this.state.count = 5). Instead, always use setState. Direct state mutation does not trigger a re-render, which can lead to inconsistent UI and bugs.
+Triggers Re-render:
+When you call setState, React re-renders the component with the updated state. This makes the component dynamic, reacting to changes in data.
+Summary:
+setState is the method used to update the state in React class components.
+It triggers a re-render, merging the new state with the existing state.
+setState is asynchronous, so always use a callback or functional approach when relying on previous state values.
+Use setState instead of directly mutating the state to ensure React properly handles re-rendering and state management.
+
+EVENT HANDLING :
+Event handling in React refers to the process of managing user interactions, such as clicks, form submissions, typing, etc., in React components. React uses a system of synthetic events to provide a consistent experience across different browsers, making it easier to handle events efficiently.
+
+Key Points about Event Handling in React:
+JSX and Events:
+In React, you can attach event handlers directly to elements using JSX syntax. The syntax is similar to HTML, but in React, event handler names use camelCase (e.g., onClick, onChange), and the handler is passed as a function.
+Example:
+function MyButton() {
+  return <button onClick={() => alert('Button clicked!')}>Click me</button>;
+}
+
+2. Passing Event Handlers:
+Event handlers are typically functions that are defined in the component and passed as props to the element where the event is triggered.
+Example:
+function MyButton() {
+  const handleClick = () => {
+    alert('Button clicked!');
+  };
+
+  return <button onClick={handleClick}>Click me</button>;
+}
+
+3. Synthetic Events:
+React wraps native browser events into a synthetic event system, which provides consistent behavior across all browsers. These synthetic events are lightweight, cross-browser wrappers around the browser’s native events.
+The synthetic event system improves performance by reusing event objects and batching updates.
+
+
+4. Event Object:
+When an event is triggered, React provides an event object (usually named event or e) as an argument to the event handler function. This event object contains information about the event, such as the type of event, the target element, and other properties like preventDefault() and stopPropagation().
+Example:
+function MyForm() {
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevent default form submission behavior
+    console.log('Form submitted!');
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <button type="submit">Submit</button>
+    </form>
+  );
+}
+
+5. Binding this in Class Components:
+In class components, you often need to bind this to the event handler method to ensure that the this keyword refers to the component instance.
+Example:
+
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick() {
+    console.log(this);  // 'this' refers to the component instance
+  }
+
+  render() {
+    return <button onClick={this.handleClick}>Click me</button>;
+  }
+}
+
+6. Passing Arguments to Event Handlers:
+You can pass additional arguments to event handler functions by using an arrow function or a function call within the event handler.
+
+Example:
+function MyButton() {
+  const handleClick = (name) => {
+    alert(`Hello, ${name}!`);
+  };
+
+  return <button onClick={() => handleClick('Alice')}>Greet Alice</button>;
+}
+
+Common React Events:
+onClick: Handles click events.
+onChange: Tracks changes in form fields (e.g., inputs, selects).
+onSubmit: Handles form submission.
+onKeyDown / onKeyUp: Detects keyboard interactions.
+onMouseEnter / onMouseLeave: Handles mouse hover events.
+onFocus / onBlur: Manages focus and blur events for inputs.
+Summary:
+Event handling in React uses synthetic events for cross-browser consistency.
+Event handlers are passed as functions and named in camelCase (e.g., onClick, onChange).
+You can access the event object to control the event flow and prevent default behavior.
+In class components, you often need to bind this to event handler methods.
+
+BINDING EVENT HANDLERS:
+Binding event handlers in React refers to ensuring that the event handler function has the correct value of this when invoked. This is particularly important in class components because in JavaScript, the value of this inside a function depends on how the function is called.
+In React class components, methods like event handlers (onClick, onSubmit, etc.) do not automatically bind this to the component instance. To ensure the correct this context is maintained, you must explicitly bind the event handler in one of several ways.
+Key Methods for Binding Event Handlers:
+Binding in the Constructor:
+This is the most common method to bind event handlers in class components. The binding is done once in the constructor, which ensures that the handler maintains the correct this context when invoked.
+  2.    Using Arrow Functions in Class Properties:
+Another approach is to define the event handler as an arrow function inside the class. Arrow functions automatically bind this to the context in which they are defined, so there's no need for explicit binding in the constructor.
+  3.    Binding Inline in the Render Method:
+You can bind the event handler directly in the JSX render method. However, this is generally not recommended because it creates a new function on every re-render, which can impact performance in large applications.
+  4.    Using Arrow Functions in the JSX Render Method:
+You can also use an arrow function directly in the onClick event. This avoids the need for explicit bind(), but like the inline binding method, it creates a new function on each render.
+
+Why Binding is Important:
+Without binding, this inside event handler functions would be undefined or point to the wrong context. Binding ensures that this inside an event handler refers to the component instance, allowing you to access its state and methods.
+Summary:
+Binding is necessary in React class components to ensure the correct this context is maintained in event handler functions.
+The most common way to bind event handlers is in the constructor or by using arrow functions.
+Avoid binding directly in the render method, as it creates new functions on every re-render, which can impact performance.
+
+METHODS AS PROPS:
+In React, methods as props refers to the practice of passing a function (often an event handler or method) from a parent component down to a child component via props. This is commonly used to allow child components to communicate back to the parent component, typically when an event occurs (e.g., button click, form submission).
+
+Why Use Methods as Props?
+Data Flow in React: In React, data flows in one direction: from parent to child components (unidirectional data flow). Sometimes, a child component needs to trigger a function defined in the parent to update the parent’s state or handle a specific action.
+Communication from Child to Parent: By passing a method as a prop, the child component can communicate or send data back to the parent component.
+In React, methods as props refers to the practice of passing a function (often an event handler or method) from a parent component down to a child component via props. This is commonly used to allow child components to communicate back to the parent component, typically when an event occurs (e.g., button click, form submission).
+Why Use Methods as Props?
+Data Flow in React: In React, data flows in one direction: from parent to child components (unidirectional data flow). Sometimes, a child component needs to trigger a function defined in the parent to update the parent’s state or handle a specific action.
+Communication from Child to Parent: By passing a method as a prop, the child component can communicate or send data back to the parent component.
+How to Pass Methods as Props
+Define the Method in the Parent Component:
+The parent component defines a method (e.g., to handle an event or update the state).
+Pass the Method to the Child as a Prop:
+The parent component passes the method to the child component via props.
+Invoke the Method in the Child Component:
+The child component receives the method and can invoke it in response to some event (e.g., a button click).
+Example of Passing Methods as Props:
+
+
+PARENT COMPONENT:
+import React, { useState } from 'react';
+import ChildComponent from './ChildComponent';  // Importing Child Component
+
+function ParentComponent() {
+  const [message, setMessage] = useState('Hello from Parent');
+
+  // Method to be passed to the child component
+  const updateMessage = (newMessage) => {
+    setMessage(newMessage);  // Updates the parent's state
+  };
+
+  return (
+    <div>
+      <h1>{message}</h1>
+      {/* Passing the method as a prop to the child component */}
+      <ChildComponent updateMessage={updateMessage} />
+    </div>
+  );
+}
+
+export default ParentComponent;
+
+CHILD COMPONENT:
+import React from 'react';
+
+function ChildComponent({ updateMessage }) {
+  return (
+    <div>
+      <button onClick={() => updateMessage('Message from Child!')}>
+        Update Parent Message
+      </button>
+    </div>
+  );
+}
+
+export default ChildComponent;
+
+Benefits of Passing Methods as Props:
+Separation of Concerns: The child component doesn't need to know about the parent's state. It just calls the method provided by the parent to trigger a specific action.
+Reusability: Methods passed as props allow for reusable child components that can work with different methods passed by different parents.
+Controlled Components: This pattern is useful in controlled components, where the parent controls the state, but child components handle events and pass the data back to the parent.
+Summary:
+Methods as props enable child components to communicate with their parent components by invoking functions passed down from the parent.
+The parent can define a method to handle events or update its state and pass it to the child, which invokes it in response to events like clicks or form submissions. This helps maintain the unidirectional data flow in React.
+If you want to pass parameters from child component to parent component then use arrow methods
+
+CONDITIONAL RENDERING:
+Conditional rendering in React refers to displaying components or elements based on certain conditions. It allows you to dynamically render different UI elements depending on the application state or props.
+
+Key Ways to Implement Conditional Rendering in React:
+Using if Statements:
+You can use an if statement in the render method to conditionally return different JSX based on a condition.
+     2. Ternary Operator:
+The ternary operator (condition ? expr1 : expr2) is a concise way to handle simple conditions directly within JSX.
+     3. Logical && Operator:
+The logical && operator can be used to conditionally render elements. If the condition is true, the element after && is rendered; if it’s false, nothing is rendered.
+    4. Conditional Rendering with Variables:
+You can store JSX in variables based on conditions and return the appropriate variable in the render method.
